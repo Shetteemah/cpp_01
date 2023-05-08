@@ -2,13 +2,14 @@
 #include <fstream>
 #include <string>
 
-void replaceAll(std::string& str, const std::string& from, const std::string& to)
+void ft_replace(std::string& stash, const std::string& find, const std::string& replace)
 {
     size_t start_pos = 0;
-    while ((start_pos = str.find(from, start_pos)) != std::string::npos)
+    while ((start_pos = stash.find(find, start_pos)) != std::string::npos)
 	{
-        str.replace(start_pos, from.length(), to);
-        start_pos += to.length();
+        stash.erase(start_pos, find.length());
+        stash.insert(start_pos, replace);
+        start_pos += replace.length();
     }
 }
 
@@ -20,8 +21,8 @@ int main(int argc, char* argv[])
         return 1;
     }
     std::string filename = argv[1];
-    std::string s1 = argv[2];
-    std::string s2 = argv[3];
+    std::string find = argv[2];
+    std::string replace = argv[3];
     std::ifstream inputFile(filename);
     if (!inputFile.is_open())
 	{
@@ -38,7 +39,7 @@ int main(int argc, char* argv[])
     std::string line;
     while (std::getline(inputFile, line))
 	{
-        replaceAll(line, s1, s2);
+        ft_replace(line, find, replace);
         outputFileStream << line << std::endl;
     }
     std::cout << "Done. Output written to " << outputFile << std::endl;
